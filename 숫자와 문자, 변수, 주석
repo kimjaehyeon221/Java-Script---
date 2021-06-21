@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	alert("coding" + " " + "everybody")
+  //주석, 코멘트 
+</script>
+</body>
+</html>
+
+
+var a = 100;
+a = a + 10;
+alert(a);
+a = a / 10;
+alert(a);
+a = a - 10;
+alert(a);
+a = a * 10;      
+alert(a);
