@@ -1,0 +1,97 @@
+//연산자
+//나머지 연산자는 다른 언어의 맥락과 같기에 특이점들에 대해서 기술한다. 
+// === 비교 연산자 == c언어와 파이썬과 다른 비교 연산자.
+alert(1 =='1')
+alert(1 === 1)
+alert(null == undefined)  //null은 값이 없지만 프로그래머가 의도적으로 값을 부여한것 따라서 
+alert(null === undefined)//undefined랑은 정확하게 따지면 다름 
+alert(true == 1);               //true --> 동등 연산자는 1을 True로 간주함
+alert(true === 1);              //false
+alert(true == '1');             //true
+alert(true === '1');            //false -> boolean
+alert(0 === -0);                //true
+alert(NaN === NaN);             //false -> 특수한 데이터 형, 숫자가 아니라는 뜻이다. 
+//'!=='는 '!='와 '=='의 관계와 같다. 정확하게 같지 않다는 의미다. 예제는 생략한다.
+
+//조건문 문법 --> boolean이 들어간다. 
+if (false){
+    alert(1);
+} else if (false){
+  alert(3);
+} else if (true) {
+  alert(2);
+} else {
+  alert(4);
+}
+
+//로그인 
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		 var id = prompt('아이디를 입력해주세요.');
+		 var password = prompt('비밀번호를 입력해주세요');
+		 if ((id==='egoing' || id==='k8805' || id==='sorialgi') && password == '111111') {
+		 		alert('인증 했습니다') 
+		 } else {
+		 	alert('인증에 실패 했습니다')
+		 }
+	</script>
+</body>
+</html>
+
+//boolean의 대체재
+if(0){
+    alert(1)
+}
+if(1){
+    alert(2) 
+    
+//반복문 -> loop 와 iterate 반복문은 컴퓨터를 강력하게 한다. 
+//while , for
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	var i = 0;
+	/*whlie(i < 10){
+		document.wirte("Coding everybody"+i+ "<br/>");
+		i ++;
+	}*/
+  for (var i = 0; i < 10; i++){
+		document.wirte("Coding everybody"+(i*2)+ "<br/>");
+	}
+  //i++, ++i 먼저 실앻되고 더하는 건 전자 더하고 실행되는 건 후자. iterate -> i는 관용적인 변수의 의미
+</script>
+</body>
+</html>
+
+//반복문의 제어 
+for (var i = 0; i < 10; i++){
+    if(i==5){
+      break;
+    }
+		document.wirte("Coding everybody"+(i*2)+ "<br/>");
+}
+for (var i = 0; i < 10; i++){
+    if(i==5){
+      continue;
+    }
+		document.wirte("Coding everybody"+(i*2)+ "<br/>");
+}
+//반복문의 중첩
+for (var i = 0; i < 10; i++){
+    for (var ㅓ = 0; ㅓ < 10; ㅓ++){
+		document.wirte(String(i) + String(j) + "<br/>");
+	}
+} // 배열에서 반복문의 진가가 드러난다.
+  
+    
