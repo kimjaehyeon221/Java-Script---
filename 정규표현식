@@ -1,0 +1,93 @@
+//자바스크립트 내에서 정규표현식을 다루는 방법에 대해서 알아보기.
+//정규 표현식은 하나의 언어.
+
+var pattern = /a/
+var pattern = new RegExp('a');
+
+var pattern = /a./; //.은 특수한 문자
+pattern.exec('abcde');
+["ab", index: 0, input: "abcde", groups: undefined]
+patter.exec('abcde');
+["a", index: 0, input: "abcde", groups: undefined]
+pattern.exec('bcdef');
+null
+
+//존재의 유무를 검사하는 test함수
+pattern.test('abcde');
+true
+pattern.test('bcde');
+false
+
+//문자열 객체 메소드 실행
+var str ='abcdef';
+undefined
+str.match(pattern);
+["a", index: 0, input: "abcdef", groups: undefined]
+var str ='bcdef';
+undefined
+str.match(pattern);
+null
+
+//문자열 치환
+var str ='abcdef';
+undefined
+str.replace(pattern, 'A')
+"Abcdef"
+
+//옵션 
+//i는 대문자와 소문자 상관없이
+var xi =/a/;
+und
+efined
+"Abcde".match(xi);
+null
+
+var oi =/a/i;
+undefined
+"Abcde".match(oi);
+["A", index: 0, input: "Abcde", groups: undefined]
+
+//g는 모든 위치의 문자를 찾아냄
+var xg =/a/;
+undefined
+"abcdea".match(xg);
+["a", index: 0, input: "abcdea", groups: undefined]
+
+var og =/a/g;
+undefined
+"abcdea".match(og);
+(2) ["a", "a"]
+
+//i, g는 중복해서 사용할 수 있음
+var ig = /a/ig;
+undefined
+"AabcAa".match(ig);
+(4) ["A", "a", "A", "a"]
+
+//캡쳐, 치환 -> 캡쳐: 그룹을 지정하고 사용하는 개념을 캡쳐라 한다. 
+var pattern = /(\w+)\s(\w+)/;
+undefined
+var str = "coding everybody";
+undefined
+var result = str.replace(pattern, "$2, $1"); // $2라는 기호는 패턴에서 두번째 그룹을 $1은 패턴에서 첫번째 
+그룹을 의미한다.
+undefined
+console.log(result);
+
+//((\w+)\s(\w+)
+/*
+()는 그룹을 의미한다.
+\w word를 의미한다. 예를 들어 A~Z, a~z, 0~9
++ 수량자, 앞에 있는 문제가 하나 이상일 경우에 예를 들어 #은 해당하지 않는다. A, AA는 해당된다.
+\s는 공백을 의미한다. 예를 들어 A_만족시킨다.
+(\w+) 앞에 있는 문자가 하나 이상일 경우에 만족한다.
+*/
+
+//치환
+var urlPattern = /\b(?:https?):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*/gim;
+var content = '생활코딩 : http://opentutorials.org/course/1 입니다. 네이버 : http://naver.com 입니다. ';
+var result = content.replace(urlPattern, function(url){
+    return '<a href="'+url+'">'+url+'</a>';
+});
+console.log(result);
+
