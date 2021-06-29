@@ -1,0 +1,119 @@
+//클로저 -> 내부함수와 외부함수 
+function outter(){ //외부 변수 
+    var title = 'coding everyday'
+    function innner(){ // 내부 변수
+        alert(title); //내부함수에서 외부함수의 지역변수에 접근할 수 있다. 이를 클로저라 칭한다.
+    }
+    inner();
+}
+outter();
+
+//외부함수의 실행이 끝나고 외부함수가 소멸된 이후에도 내부함수가 외부함수의 변수에 접근 가능하다.
+function outter(){
+    var title = 'coding everybody';  
+    return function(){        // return 함수가 종료되었다는 뜻 
+        alert(title);
+    }
+}
+inner = outter(); /return값을 inner라는 변수가 받는다. 
+//외부함수의 변수를 참조하는 내부함수 (클로저)때문에 외부함수는 
+외부함수의 지역변수를 사용하는 내부함수가 소멸될 때 까지 소멸되지 않는다.
+inner();
+
+function factory_movie(title){
+    return {
+        get_title : function () {
+            return title;
+        },
+        set_title :  function(_title){
+            title = _title
+        }
+    }
+}
+
+ghost = factory_movie('Ghost in the shell');
+matrix = factory_movie('Matrix');
+
+alert(ghost.get_title());
+alert(matrix.get_title());
+
+//ghost와 matrix의 담겨있는 객체들이 실행된 맥락을 서로 다르다. 
+//둘다 같은 객체를 사용하지만 객체가 가지고 있는 메소드가 접근하는 타이틀이라고 하는 외부 변수에 
+담겨있는 값이 서로 다르다.
+
+ghost.set_title('공각기동대') //외부변수의 값을 바꾸게 된다.
+alert(ghost.get_title()); // 공각기동대 출력 - 지역변수의 값은 유지되고 있었기 때문에 (클로저 개념)
+alert(matrix.get_title()); //Matrix
+
+//비밀 변수 함수는 종료되고 함수의 외부 변수가 함수의 내부 함수로 인해서만 존재하기 때문에 비밀 변수이다.
+--> 소프트웨어 개발에 있어서 중요하다. 안전하게 수정 가능하다. 
+
+//클로저를 사용하면서 실수할 수 있는 부분
+var arr = []
+for(var i = 0; i < 5; i++){
+    arr[i] = function(){
+        return i;        
+    }
+}
+for(var index in arr) {
+    console.log(arr[index]());
+}
+
+var arr = []
+for (var i = 0; i < 5; i++){
+    arr[i] = function(id){
+        return function(){
+            return id;
+        }
+    }(i); //외부함수의 호출 **
+}
+for(var index in arr){
+    console.log(arr[index]());
+    
+//유사 배열 = argument(인자)
+//매개변수와 인자의 차이
+함수에서 저장하는 값 //  함수 호출에서의 인자
+function sum() {  //함수의 정의부분에서 인자에 대한 구현이 따로 없다. 
+    var i, _sum = 0;
+    for(i = 0; i < arguments.lenth; i++){  //arguments는 함수안에서 사용할 수 있도록 그 이름이나 특성이 약속되어 있는 일정의 배열이다.
+        document.write(i+' : '+arguments[i]+ '<br />);
+         _sum += arguments[i];
+    }
+    return _sum;
+}
+document.write('result : ' +sum(1,2,3,4));  //실제로는 배열이 아닌 객체의 인스턴스이다.  
+--> 파이썬 수업에서 배웠던 객체의 구체적인 예시. 고양이나 강아지 같은?
+//인스턴스의 정의 클래스에 소속된 개별적인 객체를 의미한다.
+
+결과
+0 : 1
+1 : 2
+2 : 3
+3 : 4
+result : 10
+
+//함수.length는 함수에 정의된 인자의 수를 의미하고 arguments.length는 함수로 전달된 실제 인자의 수를 의미.
+--> 두개의 값을 비교해서 의도에 벗어났는지를 파악하기. // 두개가 일치해야되는 경우가 존재할 수 있기 때문이다.
+
+function zero(){
+    console.log(
+        'zero.length', zero.length,
+        'arguments', arguments.length
+    );
+}
+function one(arg1){
+    console.log(
+        'one.length', one.length,
+        'arguments', arguments.length
+    );
+}
+function two(arg1, arg2){
+    console.log(
+        'two.length', two.length,
+        'arguments', arguments.length
+    );
+}
+zero();  //zero.length 0 arguments 0
+one('vall', 'val2');  //one.length 1 arguments 2
+two('vall')  //two.length 2 arguments 1
+
