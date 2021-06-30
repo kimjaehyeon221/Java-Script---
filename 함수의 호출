@@ -1,0 +1,44 @@
+function func() {  
+//function은 객체 func()는 객체의 인스턴스 func은 function이 가지고 있는 메소드를 상속 
+}
+func();
+//기본적인 함수의 호출
+
+function sum(arg1, arg2){
+    return arg1 + arg2;
+}
+sum(1,2);
+sum(4,2);
+sum.apply
+--> function apply() {[native code]}
+sum.apply(null, [1,2]);
+//첫번째 인자는 함수가 실행될 맥락, 두번째 인자는 배열(함수의 인자가 순차적으로 대입)
+
+
+o1 = {varl1 : 1, val2: 2, val3:3}
+o2 = {vl : 10, v2: 50, v3:100, v4: 25}
+function sum(){
+    var _sum = 0;  //var this = o1;
+    for(name in this){  //현재 정해져 있지 않음 -> 호출할 때 정해짐
+        _sum += this[name];
+    }
+    return _sum;
+}
+alert(sum.apply(o1))  //6 --> 함수가 호출되는 시점에서의 o1.sum
+alert(sum.apply(o2))  //185 -->  함수가 호출되는 시점에서의 o2.sum
+ 
+
+function sum(){
+    var _sum = 0;
+    for(name in this){
+        if(typeof this[name] != 'function)
+        _sum += this[name];
+    }
+    return _sum;
+}
+o1 = {val1:1, val2:2, val3:3, sum:sum}  
+//sum이라는 함수가 o1이라는 객체 안에 있어야(속성으로) o1.sum()이라는 표현이 맞음
+o2 = {v1:10, v2:50, v3:100, v4:25, sum:sum}
+alert(o1.sum());
+alert(o2.sum());
+
