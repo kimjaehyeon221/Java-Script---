@@ -1,0 +1,94 @@
+//객체지향 프로그래밍
+: 프로그래밍 패러다임으로 로직을 상태(state)와 행위(behave)로 이루어진 객체로 만드는 것이다.
+= 객체는 변수와 메소드를 그룹핑한 것이다.
+ex) 하나의 객체 안에는 본문인지 댓글인지에 따라서 그 기능과 관련된 변수와 기능을 가두어둔 것
+--> 확장된 프로그램에서의 적응력을 위하여 만들어진 수단 중 하나. <재활용성>
+
+//현실을 반영하는 좋은 설계에 대해
+-> 고도의 추상화 능력이 필요하다.
+
+//부품화
+부품화라고 하는 소프트웨어의 큰 흐름은 객체 지향이 만들어지는데 지대한 공헌을 했다고 할 수 있다.
+//부품호가 중요한 것임은 분명하지만 그 보다 중요한 것은 적절함이다. 
+막대해진 메소드
+-> 연관된 메소드와 그 메소드가 사용하는 변수들을 분류하고 그룹핑하는 것이 바로 객체 지향 프로그래밍
+
+//은닉화와 캡슐화
+내부의 동작 밥법을 단단한 케이스 안으로 숨기고 사용자에게는 그 부품의 사용방법만을 노출하고 있는 것. 
+= 객체가 어떻게 만들어졌는지 모르면서도 사용한다는 것.
+
+//인터페이스 
+각각의 부품은 미리 정해진 약속에 따라서 신호를 입출력하고 연결점의 모양을 표준에 맞게 만들면 된다. 
+이러한 연결점을 인터페이스라고 한다. 소프트웨어가 하드웨어는 비슷하지만 다르다. 하드웨어가 할 수
+없는 것을 소프트웨어는 할 수 있다. 대표적으로 복제와 상속.
+
+//생상자와 new
+연관되어 있는 것들을 그룹핑한다. -> 독립성을 갖게 됨 -> 좋은 부품의 로직을 만드는 것이다. 
+
+var person = {} //객체 정의
+person.name = 'egoing'; // 객체 내의 변수 = 속성 = 'property' = name안에 'egoing'을 담는다. 
+person.introduce = function (){ // property 안에 함수를 메소드라 부른다. 
+    return 'My name is' +this.name;
+}
+document.write(person.introduce());
+
+var person1 = {
+    'name' : 'egoing'
+    'introduce' :  function(){
+    return 'My name is '+this.name;
+    }
+}
+
+
+var person2 = {
+    'name' : 'leezche'
+    'introduce' :  function(){
+    return 'My name is '+this.name;
+    }
+}
+
+//'introduce' :  function(){
+    return 'My name is '+this.name; -->중복이 발생 
+
+해결-->생성자와 new //함수라는 것이 객체의 시중을 드는 것이 아니라 객체의 창조자.
+
+funtion Person(){}
+//이 부분을 제거하면 어떤 오류가 뜰까?
+//VM116:1 Uncaught ReferenceError: Person is not defined at <anonymous>:1:10
+var p  = new Person();
+p.name = 'egoing'
+p.introduce = function(){
+    return 'My name is ' +this.name;
+}
+document.write(p.introduce());
+
+//객체에 대한 초기화 (initialize)
+function Person(name){
+    this.name = name;
+    this.introduce = function() {
+        return 'My name is' + this.name;
+    }
+}
+
+var p1 = new Person('egoing')
+document.write(p1.introduce('egoing') + "<br / >");
+
+var p2 = new Person('leechze')
+document.write(p2.introduce('leechze') + "<br / >");
+
+//전역객체
+--> 모든 전역변수와 함수는 사실 window 객체의 property이다. 그래서 자바스크립트는 객체 지향 언어
+var o = {
+    'func' : function() {
+    alert('Hello?');
+}}
+o.func();
+window.o.func();
+
++ node.js에서는 전역객체의 메소드인 alert()가 존재하지 않는다. 
++ 전역 객체의 이름은 호스트환경에 따라서 상이하다. 
+웹브라우저에서 전역 객체는 window이지만 node.js에서는 global이다. 
+
+
+
+
