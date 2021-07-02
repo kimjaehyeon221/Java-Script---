@@ -1,0 +1,212 @@
+//표준 내장 객체의 확장 (standard Built - in object)  VS 사용자 정의 객체 VS Hibrid
+->Object, Function, Array, String, Boolean, Number, Math, Date, RegExp
+
+//배열을 확장 
+var arr = new Array('seoul', 'new york', 'ladarkh', 'Busan', 'Tsukuba');
+function getRandomValueFromarray(arr){
+    //var index = Math.random() //0~1, 0, 0.1, 0.2, 0.3, 0.4 ~ 1
+    //var index = arr.length * Math.random() //소수를 갖게됨,  arr.length * 0 ~ 1 = 0 ~ arr.length
+    var index = Math.floor(arr.length * Math.random()); // Math.floor(바닥 = 내림) 정수의 값을 갖게됨
+    return arr[index]; 
+}
+console.log(getRandomValueFromArray(arr));
+
+//비교대상 코드 = 1차 완성본 코드
+var arr = new Array('seoul', 'new york', 'ladarkh', 'Busan', 'Tsukuba');
+function getRandomValueFromarray(arr){
+    var index = Math.floor(arr.length * Math.random());
+    return arr[index]; 
+}
+console.log(getRandomValueFromArray(arr));
+
+//함수를 배열 객체에 포함시키는 것 = 최종 완성본 코드 =prototype을 통한 표준 내장 객체의 확장  
+//함수가 혼자 있을 때에 비해 객체 안에 있을 때 이름의 복잡도는 조금 달라진다.
+Array.prototype.random = function(){ //인자를 가지고 있지 않음 - > 사용자가 신경써야할 대상이 줄어들음.
+//randome 이라는 메소드가 배열과 관련되어있다는 것을 알려줌으로써 가독성 높아진다.
+    var index = Math.floor(this.length * Math.random()); //this는 배열 자체를 가르킨다.
+    return this[index]; 
+}
+var arr = new Array('seoul', 'new york', 'ladarkh', 'Busan', 'Tsukuba');
+console.log(arr.rand());
+
+
+//Object라는 객체 
+//객체의 가장 기본적인 형태를 지니고 있는 객체이다.
+//Object의 효용 1. 데이터를 저장하는 그릇
+//              2. 모든 객체는 Object 객체의 프로퍼티를 가지고 있다. 
+
+//1. 데이터를 저장하는 그릇
+var grades = {'egoing' : 10, 'k8805': 6, 'sorialgi': 80);
+
+//2. 상속
+//Object라는 속성의 모든 객체가 가지고 있는 속성이 된다. = 모든 객체의 원형 
+//Object가 가지고 있는 속성은 모든 객체가 가지고 있다. 
+//ex) Object -> Ultra -> Super -> Sub
+
+
+
+//Object 객체를 확장한 사례이다. 
+//Object는 두가지 메소드를 가지고 있음
+
+
+//1.Object.keys()
+//객체를 만들지 않음, 인자를 받음
+// Object.keys = function 
+//Object는 생성자 함수 그리고 함수는 객체이기에 속성을 가질 수 있음(자바스크립트에선)
+
+var arr = ["a", "b", "c"];
+console.log('Object.keys(arr)', Object.keys(arr));  -> ["0", "1", "2"]
+
+var o = {"name" : "egoing", "age" : 20, "city" : "Seoul"}
+Object.keys(0); -> ["name", "age", "city"]
+
+//2.Object.prototype.toString() 
+//어떠한 객체를 만든다.  
+//Object.prototype.tostring = function
+
+var o = new Object();
+// 생성자의 prototype이라 하는 특수한 속성에 정의되어 있는 객체를 원형으로 하는 객체가 생성된다. 
+// prototype이 끼어있는 메소드들은 공통의 기능이다. 
+console.log('o.toString()', o.toString());
+
+var a = new.Array(1,2,3);
+console.log(a.toString()', a.toString());
+
+//Specifications -> 버전 체크 
+
+//Object 객체의 확장 
+Object.prototype.contain = function(needle){  // 여기서 contain이 객체의 속성값으로 생성된다. 
+    for(var name in this){
+        if(this[name] === needle){
+            return true;
+        }
+    }
+    return false;
+}
+
+var o = {"name" : "egoing", "city" : "Seoul"} //객체
+console.log(o.contain('egoing'));
+var a = ['egoing', 'leezche', 'grapittie'] //배열
+console.log(a.contain('leezche'));
+
+
+//문제점이 존재한다. -> 모든 객체에 영향을 주기 때문에 확장하지 않는 것이 바람직하다. 
+
+for(var name in o) {
+    console.log(name);
+}
+
+--> 결과값: name, contain 
+// contain이 나오는 이유는 object를 확장하여 모든 객체는 contain이라는 property를 가지게 되었기 때문이다.
+
+
+//문제 해결 방법
+//프로퍼티의 해당 객체의 소속인지를 체크해볼 수 있는 hasOwnProperty를 사용하면 된다. 
+
+
+for(var name in o) {
+    if(o.hasOwnProperty(name)){
+         console.log(name);
+    }
+}
+
+
+//데이터 타입 
+//데이터 타입이란 데이터의 형태 
+//데이터 타입 1. 객체
+              2. 객체가 아닌 것 = 원시 데이터 타입 = 그 외의 모든 데이터 타입은 객체
+              
+var str = 'coding'
+console.log(str.length);
+console.log(str.charAt(0));
+//문자열은 분명히 property 와 method가 있다. Object access Operator이 있으니까
+//하지만 자바 스크립트는 문자열 객체를 만들고 사용이 끝나면 제거하기 때문에 문자열은 객체가 아니다. 
+
+--> 원시 데이터 타입과 객체는 다른 동작 방법을 가지고 있기 때문에 이들을 분별하는 것이 필요하다.
+var str = 'coding'
+str.prop = 'everybody'  --> 객체가 만들어 졌지만
+console.log(str.prop);  //undefined  --> 이 순간이 끝나면 객체를 제거하고 원시 데이터 타입으로 돌아옴.
+//prop를 wrapper object라고 한다. 원시 데이터 타입(이 예시에선 문자열)을 감싸주는 객체 
+//자바스크립트는 다른 어떤한 언어들과 다르게 자동으로 처리해줌
+
+//총 결론
+//레퍼객체로는 String, Number, Boolean이 있다. null과 undefined는 레퍼 객체가 존재하지 않는다.
+//원시 데이터 타입
+숫자 -> Number 객체가 생성
+문자열 -> String 객체가 생성
+불리언 -> Boolean이라는 객체가 생성
+null -> x //원시 데이터 타입이지만 래퍼 객체가 존재하지 않는다. //순수 원시 데이터 타입 
+undefined -> x //원시 데이터 타입이지만 래퍼 객체가 존재하지 않는다. //순수 원시 데이터 타입
+           
+           
+//복제 
+var a = 1;  //원시 데이터 타입일 때
+var b = a; //a를 카피한 값 1이 새로 만들어지고  b에 들어가게 됨. 
+b = 2; // 값을 변경한 것은 변수 b 
+console.log(a); // 1
+--> 연결되지 않는 별도의 데이터이다. 
+
+//참조 = reference
+var a = {'id':1};  //객체가 메모리 상에 생성하게 됨 a는 그 객체를 가르킴
+//객체면 변수 안에는 데이터에 대한 참조 방법이 들어있다고 할 수 있다. 
+var b = a;   //a가 가르키고 있는 그 객체를 똑같이 가르킴
+b.id = 2;  //객체의 값을 변경함
+console.log(a.id); // 2
+//객체는 참조형 데이터(참조 자료형)이라고도 부른다. 
+
+var a = {'id':1};
+var b = a;  // b와 a는 똑같은 객체를 바라보게 된다. 
+b = {'id' : 2};
+console.log(a.id);  // 1  
+
+//함수의 참조와 복제 -> parameter(매개변수)
+//1.원시 데이터 타입을 인자로 넘겼을 때의 동작 모습
+var a = 1;
+function func(b){ // b는 매개변수(parameter)
+    b = 2;
+}
+func(a);
+console.log(a);
+
+//2. 객체를 인자로 넘겼을 때의 동작 모습
+var a = {'id' : 1}
+function func(b){
+    b = {'id' : 2};
+}
+func(a);
+console.log(a.id);
+
+var a = {'id' : 1}
+function func(b){
+    b.id = 2;
+}
+func(a);
+console.log(a.id);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
