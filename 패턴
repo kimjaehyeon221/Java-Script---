@@ -1,0 +1,37 @@
+//패턴 = 자주 사용하는 로직들의 구현방법과 그것에 대한 이름을 의미한다. 
+--> 이 강의는 web - java script에서 구체적으로 학습할 것
+
+노드 작업을 하게 되면 선택된 노드가 어떤 타입인지를 판단해야 하는 경우가 있다. 
+이런 경우에 사용할 수 있는 API가 nodeType, nodeName이다. 
+
+<!DOCTYPE html>
+<html>
+<body id="start">
+<ul>
+    <li><a href="./532">html</a></li> 
+    <li><a href="./533">css</a></li>
+    <li><a href="./534">JavaScript</a>
+        <ul>
+            <li><a href="./535">JavaScript Core</a></li>
+            <li><a href="./536">DOM</a></li>
+            <li><a href="./537">BOM</a></li>
+        </ul>
+    </li>
+</ul>
+<script>
+function traverse(target, callback){
+    if(target.nodeType === 1){
+        //if(target.nodeName === 'A')
+        callback(target);
+        var c = target.childNodes;
+        for(var i=0; i<c.length; i++){
+            traverse(c[i], callback);       
+        }   
+    }
+}
+traverse(document.getElementById('start'), function(elem){
+    console.log(elem);
+});
+</script>
+</body>
+</html>
